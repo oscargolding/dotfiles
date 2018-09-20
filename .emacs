@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Style Choices ;;;;;;;;;;
-;; Make the menu bar turn off
+;; Make the mennu bar turn off
 (menu-bar-mode -1)
 ;; Show the matching paranthesis
 (show-paren-mode 1)
@@ -101,3 +101,5 @@
   (interactive)
   (dired "/ssh:cse:"))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
