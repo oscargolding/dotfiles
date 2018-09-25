@@ -6,10 +6,11 @@
 ;; Helm - MELPA
 ;; Cyberpunk Theme - MELPA
 ;; Org Bullets - MELPA
+;; Spaceline - MELPA
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Style Choices ;;;;;;;;;;
-;; Make the mennu bar turn off
+;; Make the menu bar turn off
 (menu-bar-mode -1)
 ;; Show the matching paranthesis
 (show-paren-mode 1)
@@ -17,6 +18,10 @@
 (tool-bar-mode -1)
 ;; Turn off the scroll bar
 (scroll-bar-mode -1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Font ;;;;;;;;;;
+(set-face-attribute 'default nil :font "Hack" )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Magit ;;;;;;;;;;
@@ -52,7 +57,9 @@
  '(ac-modes
    (quote
     (emacs-lisp-mode lisp-mode lisp-interaction-mode slime-repl-mode nim-mode c-mode cc-mode c++-mode objc-mode swift-mode go-mode java-mode malabar-mode clojure-mode clojurescript-mode scala-mode scheme-mode ocaml-mode tuareg-mode coq-mode haskell-mode agda-mode agda2-mode perl-mode cperl-mode ruby-mode lua-mode tcl-mode ecmascript-mode javascript-mode js-mode js-jsx-mode js2-mode js2-jsx-mode coffee-mode php-mode css-mode scss-mode less-css-mode elixir-mode makefile-mode sh-mode fortran-mode f90-mode ada-mode xml-mode sgml-mode web-mode ts-mode sclang-mode verilog-mode qml-mode apples-mode)))
- '(package-selected-packages (quote (helm magit elpy auto-complete cyberpunk-theme))))
+ '(package-selected-packages
+   (quote
+    (spaceline-all-the-icons spaceline helm magit elpy auto-complete cyberpunk-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -88,6 +95,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Helm ;;;;;;;;;;
 (require 'helm)
 (require 'helm-config)
+(setq x-wait-for-event-timeout nil)
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) 
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
@@ -102,4 +110,7 @@
   (dired "/ssh:cse:"))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Spaceline ;;;;;;;;;;
+(require 'spaceline-config)
+(spaceline-emacs-theme)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
