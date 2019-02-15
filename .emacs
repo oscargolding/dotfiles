@@ -7,6 +7,8 @@
 ;; Cyberpunk Theme - MELPA
 ;; Org Bullets - MELPA
 ;; Spaceline - MELPA
+;; PdfTools - MELPA
+;; EVIL - MELPA
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Style Choices ;;;;;;;;;;
@@ -20,6 +22,8 @@
 (scroll-bar-mode -1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq display-line-numbers 'relative)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Font ;;;;;;;;;;
 (set-face-attribute 'default nil :font "Hack" )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -30,6 +34,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; C Config ;;;;;;;;;;
 (setq-default c-basic-offset 4)
+(add-hook 'c-mode-hook 'column-enforce-mode)
+(add-hook 'c-mode-hook
+	  '(lambda()
+	     (setq display-line-numbers 'relative)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Saving Location ;;;;;;;;;;
 ;; backup in one place. flat, no tree structure
@@ -59,18 +67,32 @@
     (emacs-lisp-mode lisp-mode lisp-interaction-mode slime-repl-mode nim-mode c-mode cc-mode c++-mode objc-mode swift-mode go-mode java-mode malabar-mode clojure-mode clojurescript-mode scala-mode scheme-mode ocaml-mode tuareg-mode coq-mode haskell-mode agda-mode agda2-mode perl-mode cperl-mode ruby-mode lua-mode tcl-mode ecmascript-mode javascript-mode js-mode js-jsx-mode js2-mode js2-jsx-mode coffee-mode php-mode css-mode scss-mode less-css-mode elixir-mode makefile-mode sh-mode fortran-mode f90-mode ada-mode xml-mode sgml-mode web-mode ts-mode sclang-mode verilog-mode qml-mode apples-mode)))
  '(package-selected-packages
    (quote
-    (spaceline-all-the-icons spaceline helm magit elpy auto-complete cyberpunk-theme))))
+    (minions moody evil auctex column-enforce-mode pdf-tools spaceline-all-the-icons spaceline helm magit elpy auto-complete cyberpunk-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Theme ;;;;;;;;;;
 (add-hook 'after-init-hook
-      (lambda () (load-theme 'cyberpunk t)))
+	  (lambda ()
+	    (use-package cyberpunk-theme
+	    :config
+	    (load-theme 'cyberpunk t)
+	    (let ((line (face-attribute 'mode-line :underline)))
+		(set-face-attribute 'mode-line          nil :overline   line)
+		(set-face-attribute 'mode-line-inactive nil :overline   line)
+		(set-face-attribute 'mode-line-inactive nil :underline  line)
+		(set-face-attribute 'mode-line          nil :box        nil)
+		(set-face-attribute 'mode-line-inactive nil :box        nil)
+		(set-face-attribute 'mode-line-inactive nil :background "#000000")))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Org Mode ;;;;;;;;;;
@@ -110,7 +132,27 @@
   (dired "/ssh:cse:"))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Spaceline ;;;;;;;;;;
-(require 'spaceline-config)
-(spaceline-emacs-theme)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MinionsMode ;;;;;;;;;; 
+(use-package minions
+	     :config (minions-mode 1))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MoodyLine ;;;;;;;;;;
+(use-package moody
+  :config
+  (setq x-underline-at-descent-line t)
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PdfTools ;;;;;;;;;;
+(pdf-tools-install)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Vim Bindings (EVIL) ;;;;;;;;;;  
+(require 'evil)
+(evil-mode 1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
