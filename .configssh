@@ -1,0 +1,16 @@
+Host cse
+	HostName cse.unsw.edu.au
+	User z5160173
+	ControlMaster auto
+	ControlPath ~/.ssh/sockets/%r@%h-%p
+	ControlPersist 600
+
+Host grieg
+	HostName grieg.cse.unsw.edu.au
+	User z5160173
+	ControlMaster auto
+	ControlPath ~/.ssh/sockets/%r@%h-%p
+	ControlPersist 600
+
+# Make sure the server stays alive
+ServerAliveInterval 120
