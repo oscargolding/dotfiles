@@ -1,0 +1,36 @@
+command=~/.local/bin/statusbar/$BLOCK_NAME
+separator_block_width=15
+markup=pango
+
+[kernel]
+command=uname -r
+label=Kernel:
+interval=once
+color=#00FFFF
+
+[memory]
+label=MEM
+interval=30
+
+[disk]
+label=/
+interval=30
+
+[cpu_usage2]
+markup=pango
+interval=persist
+#min_width=CPU 100.00%
+#REFRESH_TIME=1
+#LABEL=CPU
+#WARN_PERCENT=50
+#CRIT_PERCENT=80
+#DECIMALS=2
+
+[time]
+command=date +%T
+interval=5
+
+[pacpackages]
+label=📦
+interval=60
+
